@@ -1,0 +1,73 @@
+---
+title: "Modelo de Regressão da VALE3"
+output: html_notebook
+---
+
+```{r}
+read_excel("/cloud/project/VALE3.xlsx")
+head(VALE3)
+```
+
+```{r}
+mod <- lm(PA ~ LP + EG + ML + II, VALE3)
+summary(mod)
+```
+Intercepto = -4.092
+Lucro/Prejuizo = 0.000002296 * 1.000.000 = 2,296
+EG = 0.6523 a cada 1%
+ML = -0.4273 a cada 1%
+II = 0,0000005888 * 1.000.000 = -0,5888
+
+R ajustado = 68,53%
+
+$$
+\hat PA = - 4.092 + \hat 0.000002296 lp + \hat 0.6523 eg -0.4273 ml + \hat 0,0000005888 ii
+$$
+
+$$
+\hat PA = \hat \beta_1 + \hat \beta_2 lp + \hat \beta_3 eg + \hat \beta_4 ml + \hat \beta_5 ii
+$$
+
+
+Diagrama de Dispersão PA X LP 
+```{r}
+plot(PA ~ LP, VALE3,
+     main = "Dispersão Preço da Ação x Lucro/Prejuizo do Periodo",
+     ylab = "Preço da Ação no Trimestre",
+     xlab = "Lucro/Prejuizo no Trimestre")
+mod2 <- lm(PA ~ LP, VALE3)
+abline(mod2, col = "red")
+corrlacaopa <- cor(VALE3$PA, VALE3$LP)
+corrlacaopa
+```
+```{r}
+plot(PA ~ EG, VALE3,
+     main = "Dispersão Preço da Ação x Endividamento Geral do Periodo",
+     ylab = "Preço da Ação no Trimestre",
+     xlab = "Endividamento Geral no Trimestre")
+mod3 <- lm(PA ~ EG, VALE3)
+abline(mod3, col = "red")
+corrlacaoeg <- cor(VALE3$PA, VALE3$EG)
+corrlacaoeg
+```
+```{r}
+plot(PA ~ ML, VALE3,
+     main = "Dispersão Preço da Ação x Margem Liquida do Periodo",
+     ylab = "Preço da Ação no Trimestre",
+     xlab = "Margem Liquida no Trimestre")
+mod4 <- lm(PA ~ ML, VALE3)
+abline(mod4, col = "red")
+corrlacaoml <- cor(VALE3$PA, VALE3$ML)
+corrlacaoml
+```
+
+```{r}
+plot(PA ~ II, VALE3,
+     main = "Dispersão Preço da Ação x Investimentos do Periodo",
+     ylab = "Preço da Ação no Trimestre",
+     xlab = "Investimentos no Trimestre")
+mod5 <- lm(PA ~ II, VALE3)
+abline(mod5, col = "red")
+corrlacaoii <- cor(VALE3$PA, VALE3$II)
+corrlacaoii
+```
